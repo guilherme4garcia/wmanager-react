@@ -6,6 +6,10 @@ import Navbar from './components/Navbar'
 import Error from './components/Error'
 import Login from './pages/Login'
 import Signup from './components/Signup'
+import Signin from './components/Signin'
+import Equipment from './pages/Equipment'
+import User from './pages/User'
+import Landing from './pages/Landing'
 
 function App() {
   return (
@@ -13,7 +17,10 @@ function App() {
       <ChakraProvider>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Signup />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </ChakraProvider>

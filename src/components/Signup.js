@@ -17,7 +17,6 @@ function Signup() {
   const [show, setShow] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [equipment, setEquipment] = useState('')
   const [password, setPassword] = useState('')
 
   const isError = false
@@ -26,16 +25,14 @@ function Signup() {
   }
   const handleSubmit = e => {
     e.preventDefault()
-    let equipment_arr = equipment.split(',')
-    if (name === '' || email === '' || equipment === '' || password === '') {
+    if (name === '' || email === '' || password === '') {
       console.log('missing parameters')
     } else {
       axios
         .post(`http://52.202.196.108:3002/signup`, {
           name: name,
           login: email,
-          password: password,
-          equipment: equipment_arr
+          password: password
         })
 
         .then(function (response) {
@@ -61,6 +58,13 @@ function Signup() {
         }}
       >
         <form>
+          <h1
+            style={{
+              marginBottom: '1rem'
+            }}
+          >
+            Cadastro de Funcionários
+          </h1>
           <Stack>
             <FormControl isRequired={!name}>
               <FormLabel htmlFor="first-name">First name</FormLabel>
@@ -86,15 +90,6 @@ function Signup() {
               )}
             </FormControl>
             )
-            <FormControl isRequired={!equipment}>
-              <FormLabel htmlFor="equipment">Equipment</FormLabel>
-              <Input
-                id="equipment"
-                placeholder="BMW, Ferrari"
-                value={equipment}
-                onChange={e => setEquipment(e.target.value)}
-              />
-            </FormControl>
             <FormControl isRequired={!password}>
               <FormLabel htmlFor="password">Password</FormLabel>
               <InputGroup size="md">
