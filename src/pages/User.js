@@ -1,28 +1,13 @@
 import React from 'react'
 
-import Signup from '../components/Signup'
-import UserList from '../components/UserList'
+import LandingUser from '../components/LandingUser'
 
-function User() {
+function Landing() {
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: '5rem'
-        }}
-      >
-        <div style={{ marginRight: '5rem' }}>
-          <Signup />
-        </div>
-        <div>
-          <UserList />
-        </div>
-      </div>
+      <LandingUser />
     </>
   )
 }
 
-export default User
+export default Landing
