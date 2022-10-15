@@ -3,7 +3,7 @@ import React from 'react'
 import Signup from '../components/Signup'
 import UserList from '../components/UserList'
 
-function User() {
+function Admin() {
   return (
     <>
       <div
@@ -25,4 +25,4 @@ function User() {
   )
 }
 
-export default User
+export default Admin

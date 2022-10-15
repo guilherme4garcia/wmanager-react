@@ -2,7 +2,7 @@ import React from 'react'
 
 import LandingUser from '../components/LandingUser'
 
-function Landing() {
+function User() {
   return (
     <>
       <LandingUser />
@@ -10,4 +10,4 @@ function Landing() {
   )
 }
 
-export default Landing
+export default User
