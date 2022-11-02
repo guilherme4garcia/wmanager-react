@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useGlobalContext } from '../context'
 import {
   FormControl,
   FormLabel,
@@ -17,6 +18,13 @@ function Signin() {
   const [show, setShow] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const {user, setUser} = useGlobalContext()
+
+
+  useEffect(() => {
+   
+    console.log(user)
+ }, [user])
 
   const isError = false
   const handleShow = () => {
@@ -28,16 +36,18 @@ function Signin() {
       console.log('missing parameters')
     } else {
       axios
-        .post(`http://52.202.196.108:3002/signin`, {
-          login: email,
+        .post(`http://localhost:3001/login`, {
+          email: email,
           password: password
         })
 
         .then(function (response) {
-          console.log(response)
+          setUser(response.data)
+          return response
         })
-        .then(() => {
-          window.location.href = 'http://localhost:3000/'
+        .then((response) => {
+          
+          response.data.admin? window.location.href = 'http://localhost:3000/admin' : window.location.href = 'http://localhost:3000/user'
         })
         .catch(function (error) {
           console.log(error)
@@ -71,7 +81,7 @@ function Signin() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
             </FormControl>
-            )
+            
             <FormControl isRequired={!password}>
               <FormLabel htmlFor="password">Password</FormLabel>
               <InputGroup size="md">
