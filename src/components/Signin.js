@@ -14,17 +14,24 @@ import {
   Stack
 } from '@chakra-ui/react'
 
+import Warning from './Warning'
+
 function Signin() {
   const [show, setShow] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const {user, setUser} = useGlobalContext()
-
+  const { user, setUser } = useGlobalContext()
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-   
     console.log(user)
- }, [user])
+  }, [user])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsVisible(false)
+    }, '4000')
+  }, [isVisible])
 
   const isError = false
   const handleShow = () => {
@@ -43,14 +50,19 @@ function Signin() {
 
         .then(function (response) {
           setUser(response.data)
+
           return response
         })
-        .then((response) => {
-          
-          response.data.admin? window.location.href = 'http://localhost:3000/admin' : window.location.href = 'http://localhost:3000/user'
+        .then(response => {
+          response.data.admin
+            ? (window.location.href = 'http://localhost:3000/admin')
+            : (window.location.href = 'http://localhost:3000/user')
         })
         .catch(function (error) {
-          console.log(error)
+          console.log(error.response.status)
+          if (error.response.status) {
+            setIsVisible(true)
+          }
         })
     }
   }
@@ -81,7 +93,7 @@ function Signin() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
             </FormControl>
-            
+
             <FormControl isRequired={!password}>
               <FormLabel htmlFor="password">Password</FormLabel>
               <InputGroup size="md">
@@ -103,6 +115,7 @@ function Signin() {
               Submit
             </Button>
           </Stack>
+          {isVisible ? <Warning /> : ''}
         </form>
       </section>
     </>
