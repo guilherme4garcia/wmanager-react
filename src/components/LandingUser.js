@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import equipment_list from '../assets/equipment_list'
+import axios from 'axios'
 import { useGlobalContext } from '../context'
 import { useEffect } from 'react'
 
@@ -12,31 +13,57 @@ import {
   Th,
   Td,
   TableCaption,
-  TableContainer
+  TableContainer,
+  Heading
 } from '@chakra-ui/react'
+import { json } from 'react-router-dom'
 
 function LandingUser() {
   const { user } = useGlobalContext()
+  const [payload, setPayload] = useState(JSON.parse(localStorage.getItem('item')))
+  const [equip, setEquip] = useState([])
+  
+  const fetch = async () => {
+      
+    try {
+      const response = await axios.get(`http://localhost:3001/equip/${payload.uuid}`)
+      setEquip(response.data)      
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
 
   useEffect(() => {
-    console.log(localStorage.getItem('item'))
-  }, [user])
+    fetch()
+    
+  }, [])
+  
 
   return (
     <div>
-      <h1>Meus Equipamentos</h1>
+      <Heading style={{margin: '1rem'}}>Meus Equipamentos</Heading>
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
+          <TableCaption>Equipamentos sob minha responsabilidade</TableCaption>
           <Thead>
             <Tr>
-              <Th>ID</Th>
               <Th>Nome</Th>
               <Th>Ambiente</Th>
               <Th>Data Empréstimo</Th>
             </Tr>
           </Thead>
-          
+          {equip.map( obj => {
+            const { uuid, name, ambiente, dt_entrada } = obj
+            return (
+              <Tbody key={uuid}>
+                <Tr>
+                  <Td>{name}</Td>
+                  <Td>{ambiente}</Td>
+                  <Td>{dt_entrada}</Td>
+                </Tr>
+              </Tbody>
+            )
+          })}
         </Table>
       </TableContainer>
     </div>
