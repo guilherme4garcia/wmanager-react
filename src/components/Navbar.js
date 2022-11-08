@@ -10,6 +10,8 @@ import {
   Button
 } from '@chakra-ui/react'
 
+import Toggle from './Toggle'
+
 import { HamburgerIcon } from '@chakra-ui/icons'
 
 const Navbar = () => {
@@ -39,6 +41,8 @@ const Navbar = () => {
           </div>
         </Link>
         <Menu>
+          
+
           <MenuButton
             ml="auto"
             as={IconButton}
@@ -51,6 +55,7 @@ const Navbar = () => {
             _focus={{ color: 'white' }}
           />
         </Menu>
+        <Toggle/>
       </nav>
       <Collapse in={isOpen} animateOpacity>
         <Box

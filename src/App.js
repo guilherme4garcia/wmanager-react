@@ -11,11 +11,13 @@ import Equipment from './pages/Equipment'
 import Admin from './pages/Admin'
 import User from './pages/User'
 
+import theme from './theme'
+
 function App() {
   return (
     <BrowserRouter>
-      <ChakraProvider>
-        <Navbar />
+      <ChakraProvider theme={theme}>
+        <Navbar />    
         <Routes>
           <Route path="/user" element={<User />} />
           <Route path="/admin" element={<Admin />} />
