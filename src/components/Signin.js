@@ -24,8 +24,10 @@ function Signin() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    console.log(user)
+    localStorage.setItem('item', JSON.stringify(user))
   }, [user])
+
+  
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,7 +52,6 @@ function Signin() {
 
         .then(function (response) {
           setUser(response.data)
-
           return response
         })
         .then(response => {
