@@ -15,16 +15,25 @@ import {
   Switch
 } from '@chakra-ui/react'
 
+import Warning from './Warning.js'
+
+
 function Signup() {
   const [show, setShow] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [admin, setAdmin] = useState(false)
+  const [isError, setIsError] = useState(false)
 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsError(false)
+    }, '4000')
+  }, [isError])
   
   
-  const isError = false
   const handleShow = () => {
     setShow(!show)
   }
@@ -32,6 +41,7 @@ function Signup() {
     e.preventDefault()
     if (name === '' || email === '' || password === '') {
       console.log('missing parameters')
+      setIsError(true)
     } else {
       axios
         .post(`http://localhost:3001/signup`, {
@@ -48,7 +58,9 @@ function Signup() {
           window.location.href = 'http://localhost:3000/admin'
         })
         .catch(function (error) {
-          console.log(error)
+          if (error.response.status) {
+            setIsError(true)
+          }
         })
     }
   }
@@ -128,6 +140,7 @@ function Signup() {
               Submit
             </Button>
           </Stack>
+          {isError ? <Warning signup='signup'/> : ''}
         </form>
       </section>
     </>

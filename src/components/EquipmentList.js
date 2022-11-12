@@ -13,7 +13,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Button
+  Button,
 } from '@chakra-ui/react'
 
 function EquipmentList() {

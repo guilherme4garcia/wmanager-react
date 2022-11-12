@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import InitialFocus from './InitialFocus'
 
-import user_list from '../assets/user_list.js'
 
 import {
   Table,
@@ -15,14 +15,14 @@ import {
   TableCaption,
   TableContainer,
   Button,
-  chakra
 } from '@chakra-ui/react'
 
 import {StarIcon, CloseIcon} from '@chakra-ui/icons'
 
+
 function UserList() {
-  const [user, setUser] = useState(user_list)
   const [payload, setPayload] = useState([])
+  const [id, setId] = useState()
 
   const fetch = async () => {
       
@@ -40,16 +40,22 @@ function UserList() {
   }, [])
   
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    {
-    }
-  }
+ 
 
-  const exclude = e => {
-    e.preventDefault()
-    {
-      
+  
+
+  useEffect(() => {
+    exclude()
+  }, [id])
+  
+  
+  const exclude = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:3001/id/${id}`)
+      console.log(response)
+      window.location.href = 'http://localhost:3000/admin'
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -72,21 +78,15 @@ function UserList() {
             return (
               <Tbody key={uuid}>
                 <Tr>
-                  <Td>
+                  <Td id={uuid}>
                     <Button
                       type="submit"
                       colorScheme="red"
-                      onClick={exclude}
+                      onClick={() => setId(uuid)}
                     >
                       Remove
                     </Button>
-                    <Button
-                      type="submit"
-                      colorScheme="blue"
-                      onClick={handleSubmit}
-                    >
-                      Edit
-                    </Button>
+                    <InitialFocus id={uuid} name={name} email={email} admin={admin} />
                   </Td>
                   <Td>{name}</Td>
                   <Td>{email}</Td>

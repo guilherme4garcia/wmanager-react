@@ -7,11 +7,11 @@ import {
   AlertDescription
 } from '@chakra-ui/react'
 
-function Warning() {
+function Warning(props) {
   return (
     <Alert status="error" style={{ marginTop: '1rem' }}>
       <AlertIcon />
-      <AlertTitle>Email or password wrong!</AlertTitle>
+      <AlertTitle>{props.signup? 'Wrong Request': 'Email or password wrong!'}</AlertTitle>
     </Alert>
   )
 }
