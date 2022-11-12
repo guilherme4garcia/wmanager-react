@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
+  Box,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -10,7 +11,8 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  Stack
+  Stack,
+  Switch
 } from '@chakra-ui/react'
 
 function Signup() {
@@ -18,7 +20,10 @@ function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [admin, setAdmin] = useState(false)
 
+  
+  
   const isError = false
   const handleShow = () => {
     setShow(!show)
@@ -29,17 +34,18 @@ function Signup() {
       console.log('missing parameters')
     } else {
       axios
-        .post(`http://52.202.196.108:3002/signup`, {
+        .post(`http://localhost:3001/signup`, {
           name: name,
-          login: email,
-          password: password
+          email: email,
+          password: password,
+          admin: admin
         })
 
         .then(function (response) {
           console.log(response)
         })
         .then(() => {
-          window.location.href = 'http://localhost:3000/'
+          window.location.href = 'http://localhost:3000/admin'
         })
         .catch(function (error) {
           console.log(error)
@@ -67,10 +73,11 @@ function Signup() {
           </h1>
           <Stack>
             <FormControl isRequired={!name}>
-              <FormLabel htmlFor="first-name">First name</FormLabel>
+              
+              <FormLabel htmlFor="Full-name">Full name</FormLabel>
               <Input
-                id="first-name"
-                placeholder="e.g: John"
+                id="full-name"
+                placeholder="e.g: John Lennon"
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
@@ -81,6 +88,7 @@ function Signup() {
                 id="email"
                 placeholder="mail@example.com"
                 value={email}
+                autoComplete=""
                 onChange={e => setEmail(e.target.value)}
               />
               {!isError ? (
@@ -89,6 +97,11 @@ function Signup() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
             </FormControl>
+              <FormLabel display={'flex'}>
+                <Box style={{marginRight: '0.5rem'}}>Admin:</Box>
+                
+                <Switch isChecked={admin} onChange={e => {setAdmin(!admin, e.target.admin)}}/>
+              </FormLabel>
             )
             <FormControl isRequired={!password}>
               <FormLabel htmlFor="password">Password</FormLabel>
@@ -98,6 +111,7 @@ function Signup() {
                   type={show ? 'text' : 'password'}
                   placeholder="Enter password"
                   value={password}
+                  autoComplete="new-password"
                   onChange={e => setPassword(e.target.value)}
                 />
                 <InputRightElement width="4.5rem">
@@ -107,6 +121,9 @@ function Signup() {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+                <FormControl display='flex' alignItems='center'>
+                  
+                </FormControl>
             <Button type="submit" colorScheme="blue" onClick={handleSubmit}>
               Submit
             </Button>

@@ -41,7 +41,8 @@ function LandingUser() {
 
   return (
     <div>
-      <Heading style={{margin: '1rem'}}>Meus Equipamentos</Heading>
+      <Heading style={{margin: '1rem'}}>Olá, {payload.name.split(' ')[0]}!</Heading>
+      <Heading style= {{margin: '1rem'}} size={"md"}>Meus Equipamentos:</Heading>
       <TableContainer>
         <Table variant="simple">
           <TableCaption>Equipamentos sob minha responsabilidade</TableCaption>
