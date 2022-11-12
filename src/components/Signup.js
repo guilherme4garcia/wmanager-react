@@ -12,11 +12,11 @@ import {
   InputRightElement,
   Button,
   Stack,
-  Switch
+  Switch,
+  Heading
 } from '@chakra-ui/react'
 
 import Warning from './Warning.js'
-
 
 function Signup() {
   const [show, setShow] = useState(false)
@@ -26,14 +26,12 @@ function Signup() {
   const [admin, setAdmin] = useState(false)
   const [isError, setIsError] = useState(false)
 
-
   useEffect(() => {
     setTimeout(() => {
       setIsError(false)
     }, '4000')
   }, [isError])
-  
-  
+
   const handleShow = () => {
     setShow(!show)
   }
@@ -76,16 +74,11 @@ function Signup() {
         }}
       >
         <form>
-          <h1
-            style={{
-              marginBottom: '1rem'
-            }}
-          >
+          <Heading size={'md'} style={{ marginBottom: '1rem' }}>
             Cadastro de Funcionários
-          </h1>
+          </Heading>
           <Stack>
             <FormControl isRequired={!name}>
-              
               <FormLabel htmlFor="Full-name">Full name</FormLabel>
               <Input
                 id="full-name"
@@ -109,11 +102,16 @@ function Signup() {
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               )}
             </FormControl>
-              <FormLabel display={'flex'}>
-                <Box style={{marginRight: '0.5rem'}}>Admin:</Box>
-                
-                <Switch isChecked={admin} onChange={e => {setAdmin(!admin, e.target.admin)}}/>
-              </FormLabel>
+            <FormLabel display={'flex'}>
+              <Box style={{ marginRight: '0.5rem' }}>Admin:</Box>
+
+              <Switch
+                isChecked={admin}
+                onChange={e => {
+                  setAdmin(!admin, e.target.admin)
+                }}
+              />
+            </FormLabel>
             )
             <FormControl isRequired={!password}>
               <FormLabel htmlFor="password">Password</FormLabel>
@@ -133,14 +131,12 @@ function Signup() {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-                <FormControl display='flex' alignItems='center'>
-                  
-                </FormControl>
+            <FormControl display="flex" alignItems="center"></FormControl>
             <Button type="submit" colorScheme="blue" onClick={handleSubmit}>
               Submit
             </Button>
           </Stack>
-          {isError ? <Warning signup='signup'/> : ''}
+          {isError ? <Warning signup="signup" /> : ''}
         </form>
       </section>
     </>

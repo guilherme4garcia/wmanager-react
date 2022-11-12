@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import InitialFocus from './InitialFocus'
-
+import EditUser from './EditUser'
+import DeleteUser from './DeleteUser'
 
 import {
   Table,
@@ -15,20 +15,18 @@ import {
   TableCaption,
   TableContainer,
   Button,
+  Heading
 } from '@chakra-ui/react'
 
-import {StarIcon, CloseIcon} from '@chakra-ui/icons'
-
+import { StarIcon } from '@chakra-ui/icons'
 
 function UserList() {
   const [payload, setPayload] = useState([])
-  const [id, setId] = useState()
 
   const fetch = async () => {
-      
     try {
       const response = await axios.get(`http://localhost:3001/users`)
-      setPayload(response.data)      
+      setPayload(response.data)
     } catch (error) {
       console.log(error.response)
     }
@@ -36,41 +34,22 @@ function UserList() {
 
   useEffect(() => {
     fetch()
-    
   }, [])
-  
-
- 
-
-  
-
-  useEffect(() => {
-    exclude()
-  }, [id])
-  
-  
-  const exclude = async () => {
-    try {
-      const response = await axios.delete(`http://localhost:3001/id/${id}`)
-      console.log(response)
-      window.location.href = 'http://localhost:3000/admin'
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   return (
     <>
-      <h1>User Manager</h1>
+      <Heading>Users:</Heading>
+      <br></br>
       <TableContainer>
         <Table variant="simple" colorScheme="teal">
           <Tbody>
             <Tr>
-              <Th></Th>
+              <Th>Equipamentos</Th>
               <Th>Name</Th>
               <Th>Email</Th>
               <Th>Admin</Th>
-              <Th>Equipment</Th>
+              <Th></Th>
+              <Th></Th>
             </Tr>
           </Tbody>
           {payload.map(user => {
@@ -78,20 +57,33 @@ function UserList() {
             return (
               <Tbody key={uuid}>
                 <Tr>
-                  <Td id={uuid}>
+                  <Td>
                     <Button
-                      type="submit"
-                      colorScheme="red"
-                      onClick={() => setId(uuid)}
+                      colorScheme={'gray'}
+                      onClick={() =>
+                        (window.location.href =
+                          'http://localhost:3000/equipment')
+                      }
                     >
-                      Remove
+                      Gerenciar Equipamentos
                     </Button>
-                    <InitialFocus id={uuid} name={name} email={email} admin={admin} />
                   </Td>
+
                   <Td>{name}</Td>
                   <Td>{email}</Td>
-                  <Td>{admin? <StarIcon></StarIcon> : <CloseIcon></CloseIcon>}</Td>
-                  
+                  <Td>{admin ? <StarIcon></StarIcon> : ''}</Td>
+
+                  <Td>
+                    <EditUser
+                      id={uuid}
+                      name={name}
+                      email={email}
+                      admin={admin}
+                    />
+                  </Td>
+                  <Td>
+                    <DeleteUser id={uuid} name={name} />
+                  </Td>
                 </Tr>
               </Tbody>
             )
