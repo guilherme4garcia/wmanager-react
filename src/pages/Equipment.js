@@ -1,7 +1,8 @@
 import React from 'react'
+import EquipmentList from '../components/EquipmentList'
 
 function Equipment() {
-  return <div>Equipment</div>
+  return <EquipmentList />
 }
 
 export default Equipment

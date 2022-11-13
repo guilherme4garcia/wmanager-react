@@ -13,10 +13,12 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Button,
+  Button
 } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 function EquipmentList() {
+  const id = useParams()
   const [equipment, setEquipment] = useState(equipment_list)
 
   const handleSubmit = e => {

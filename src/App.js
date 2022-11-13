@@ -17,11 +17,11 @@ function App() {
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        <Navbar />    
+        <Navbar />
         <Routes>
           <Route path="/user" element={<User />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/equipment/:id" element={<Equipment />} />
           <Route path="/" element={<Signin />} />
           <Route path="*" element={<Error />} />
         </Routes>
