@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-
-import equipment_list from '../assets/equipment_list.js'
+import axios from 'axios'
+import url from '../services/routes.js'
+import DeleteEquip from './DeleteEquip.js'
+import EditEquip from './EditEquip.js'
 
 import {
   Table,
@@ -14,10 +16,29 @@ import {
   TableCaption,
   TableContainer,
   Button,
+  Heading
 } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 function EquipmentList() {
-  const [equipment, setEquipment] = useState(equipment_list)
+
+  const user = useParams()
+  const [equipment, setEquipment] = useState([])
+
+  useEffect(() => {
+    fetchEquips()
+    console.log(equipment)
+  }, [])
+  
+  const fetchEquips = async () => {
+    try {
+      const response = await axios.get(`${url}/user/equips/${user.id}`)
+      setEquipment(response.data)
+      
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -27,42 +48,37 @@ function EquipmentList() {
 
   return (
     <>
-      <h1>Equipment Manager</h1>
+      <Heading>User: {user.name} </Heading>
       <TableContainer>
         <Table variant="simple" colorScheme="teal">
-          <Thead>
-            <Th>Id</Th>
-            <Th>Name</Th>
-            <Th>User</Th>
-            <Th>Ambiente</Th>
-            <Th>Emprestimo</Th>
-            <Th>Devolução</Th>
-          </Thead>
+          <Tbody>
+            <Tr>
+              <Th>Name</Th>
+              <Th>Ambiente</Th>
+              <Th>Emprestimo</Th>
+              <Th>Devolução</Th>
+            </Tr>
+          </Tbody>
           {equipment.map(equipment => {
-            const { id, name, user, ambiente, emprestimo, devol } = equipment
+            const { uuid, name, ambiente, dt_entrada, dt_saida } = equipment
             return (
-              <Tbody>
+              <Tbody key={uuid}>
                 <Tr>
-                  <Td>{id}</Td>
                   <Td>{name}</Td>
-                  <Td>{user}</Td>
                   <Td>{ambiente}</Td>
-                  <Td>{emprestimo}</Td>
-                  <Td>{devol}</Td>
-                  <Button
-                    type="submit"
-                    colorScheme="red"
-                    onClick={handleSubmit}
-                  >
-                    Remove
-                  </Button>
-                  <Button
-                    type="submit"
-                    colorScheme="blue"
-                    onClick={handleSubmit}
-                  >
-                    Edit
-                  </Button>
+                  <Td>{dt_entrada}</Td>
+                  <Td>{dt_saida}</Td>
+                  
+                  <Td>
+
+                    <DeleteEquip id={uuid} name={name}/>
+                    
+
+
+                    
+                    <EditEquip id={uuid} name={name} ambiente={ambiente} emprestimo={dt_entrada} devolucao={dt_saida}/> 
+                  </Td>
+                 
                 </Tr>
               </Tbody>
             )

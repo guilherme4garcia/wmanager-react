@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import equipment_list from '../assets/equipment_list'
 import axios from 'axios'
 import { useGlobalContext } from '../context'
 import { useEffect } from 'react'
@@ -16,7 +15,6 @@ import {
   TableContainer,
   Heading
 } from '@chakra-ui/react'
-import { json } from 'react-router-dom'
 
 function LandingUser() {
   const { user } = useGlobalContext()
