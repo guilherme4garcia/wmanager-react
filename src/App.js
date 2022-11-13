@@ -7,11 +7,12 @@ import Error from './components/Error'
 import Login from './pages/Login'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
-import Equipment from './pages/Equipment'
+import UserManager from './pages/UserManager'
 import Admin from './pages/Admin'
 import User from './pages/User'
 
 import theme from './theme'
+import EquipManager from './pages/EquipManager'
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Routes>
           <Route path="/user" element={<User />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/equipment/:id/:name" element={<UserManager />} />
+          <Route path="/equipment" element={<EquipManager />} />
           <Route path="/" element={<Signin />} />
           <Route path="*" element={<Error />} />
         </Routes>

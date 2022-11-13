@@ -62,7 +62,7 @@ function UserList() {
                       colorScheme={'gray'}
                       onClick={() =>
                         (window.location.href =
-                          'http://localhost:3000/equipment')
+                          `http://localhost:3000/equipment/${uuid}/${name}`)
                       }
                     >
                       Gerenciar Equipamentos
