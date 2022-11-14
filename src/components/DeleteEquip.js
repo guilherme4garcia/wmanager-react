@@ -16,10 +16,18 @@ function DeleteEquip(props) {
   const { id, name } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
-
+  const remove = props.remove
   const handleSubmit = async () => {
     try {
-      const response = await axios.put(`${url}/user/equip/remove/${id}`)
+      let endpoint
+
+      if (remove) {
+        endpoint = `${url}/delete-equip/${id}`
+      } else {
+        endpoint = `${url}/user/equip/remove/${id}`
+      }
+
+      const response = await axios.delete(endpoint)
       console.log(response)
       onClose()
       window.location.reload()

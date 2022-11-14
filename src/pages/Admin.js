@@ -4,6 +4,12 @@ import Signup from '../components/Signup'
 import UserList from '../components/UserList'
 
 function Admin() {
+  const user = JSON.parse(localStorage.getItem('item'))
+
+  if (!user.admin) {
+    window.location.href = 'http://localhost:3000/'
+  }
+
   return (
     <>
       <div

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import logo from '../assets/logo.svg'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Menu,
@@ -11,14 +12,17 @@ import {
 } from '@chakra-ui/react'
 
 import Toggle from './Toggle'
+import Logout from './Logout'
 
 import { HamburgerIcon } from '@chakra-ui/icons'
 
 const Navbar = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const location = useLocation()
+  const user = JSON.parse(localStorage.getItem('item')) || false
 
   useEffect(() => {
+    console.log(location)
     onClose()
     return () => {
       onClose()
@@ -28,34 +32,33 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar">
-        <Link to="/">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <h1
-              className="logotitle"
-              style={{
-                marginLeft: '1.65rem'
-              }}
-            >
-              Admin
-            </h1>
-          </div>
-        </Link>
-        <Menu>
-          
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src={logo} alt="" />
+        </div>
 
-          <MenuButton
-            ml="auto"
-            as={IconButton}
-            aria-label="Options"
-            onClick={onToggle}
-            icon={<HamburgerIcon />}
-            variant="ghost"
-            color="white"
-            colorScheme="teal"
-            _focus={{ color: 'white' }}
-          />
+        <Menu>
+          {user.admin ? (
+            <div style={{ marginLeft: 'auto' }}>
+              <MenuButton
+                ml="auto"
+                as={IconButton}
+                aria-label="Options"
+                onClick={onToggle}
+                icon={<HamburgerIcon />}
+                variant="ghost"
+                color="white"
+                colorScheme="teal"
+                _focus={{ color: 'white' }}
+              />
+            </div>
+          ) : (
+            ''
+          )}
         </Menu>
-        <Toggle/>
+        <div style={{ marginLeft: 'auto' }}>
+          <Toggle />
+        </div>
+        {location.pathname == '/' ? '' : <Logout></Logout>}
       </nav>
       <Collapse in={isOpen} animateOpacity>
         <Box
@@ -69,11 +72,11 @@ const Navbar = () => {
           display="flex"
           justifyContent="space-around"
         >
-          <Link to="/">
-            <Button colorScheme="teal">Usuários</Button>
+          <Link to="/admin">
+            <Button colorScheme="teal">User Manager</Button>
           </Link>
-          <Link to="/fols">
-            <Button colorScheme="teal">Fols</Button>
+          <Link to="/equipment">
+            <Button colorScheme="teal">Equip Manager</Button>
           </Link>
         </Box>
       </Collapse>
